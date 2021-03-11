@@ -11,7 +11,7 @@
 
           <div class="col-md-12 no-padding">
             <div class="contact_form">
-              <form method="post" action="{{ url('save-customer') }}" enctype="multipart/form-data">
+              <form method="post" action="{{ url('save-customer') }}" enctype="multipart/form-data" class="customer-save-form">
                 @csrf
                 <input type="hidden" value="{{ @$customer->id ?? '0' }}" name="edit_id">
                 <div class="form-group">
@@ -96,7 +96,7 @@
     <div class="col-4">
      <div class="form-group">
       <label class="text-center">District<span> *</span></label>
-      <input type="text"  value="{{old('district')[0] ?? @$address['contact']->district}}" class="form-control" id="state" class="form-control" id="district" name="district[]" >
+      <input type="text"  value="{{old('district')[0] ?? @$address['contact']->district}}" class="form-control" id="district" class="form-control" id="district" name="district[]" >
     </div>
   </div>
 
@@ -284,7 +284,61 @@
       if($('.proof-list').length > 1)
         $(this).closest('.proof-list').remove();
     });
+
+    $('.customer-save-form').submit(function(event){
+      event.preventDefault();
+      var action    = $(this).attr('action'),
+          pass_data   = new FormData(this),
+          form      = $(this);
+        // alert(JSON.stringify(pass_data))
+      $.ajax({
+        url: action,
+        type: 'POST',
+        dataType: 'JSON',
+        data: pass_data,
+        success: function(data) {
+          form.find('.form-inputs').val('');
+          $('.success-message').find('h4').text('Successfully saved your details !!');
+          setTimeout(function() {
+            $('.success-message').find('h4').text('');
+          }, 2500);
+          // $('input[name="edit_id"]').val('0');
+          window.location.href = '{{ url("customer") }}';
+          $('.form-group').find('span.text-danger').remove();
+        },
+        error: function(xhr, data) {
+          console.log(xhr)
+          alert(JSON.stringify(xhr.responseJSON.message));
+          // alert(JSON.stringify(xhr.responseJSON.errors['street.0']));
+          
+        if(xhr.responseJSON.errors.full_name)
+        $('input[name="full_name"]').closest('.form-group').append('<span class="text-danger">'+xhr.responseJSON.errors.staff_name+'</span>');
+         if(xhr.responseJSON.errors.email)
+        $('input[name="email"]').closest('.form-group').append('<span class="text-danger">'+xhr.responseJSON.errors.email+'</span>');
+         if(xhr.responseJSON.errors.phone)
+        $('input[name="phone"]').closest('.form-group').append('<span class="text-danger">'+xhr.responseJSON.errors.phone+'</span>');
+        if(xhr.responseJSON.errors.description)
+        $('textarea[name="relation_name"]').closest('.form-group').append('<span class="text-danger">'+xhr.responseJSON.errors.relation_name+'</span>');
+        if(xhr.responseJSON.errors['street.0'])
+          $('input[name="street[]"]').first().closest('.form-group').append('<span class="text-danger">'+xhr.responseJSON.errors['street.0'][0]+'</span>');
+        if(xhr.responseJSON.errors['street.1'])
+          $('input[name="street[]"]').last().closest('.form-group').append('<span class="text-danger">'+xhr.responseJSON.errors['street.1'][0]+'</span>');
+        $('input[name="post_name"]').closest('.form-group').append('<span class="text-danger">'+xhr.responseJSON.errors.post_name+'</span>');
+        $('input[name="pin_code"]').closest('.form-group').append('<span class="text-danger">'+xhr.responseJSON.errors.pin_code+'</span>');
+        $('input[name="district"]').closest('.form-group').append('<span class="text-danger">'+xhr.responseJSON.errors.district+'</span>');
+        $('input[name="state"]').closest('.form-group').append('<span class="text-danger">'+xhr.responseJSON.errors.state+'</span>');
+        $('input[name="proof_name"]').closest('.form-group').append('<span class="text-danger">'+xhr.responseJSON.errors.proof_name+'</span>');
+        $('input[name="proof_number"]').closest('.form-group').append('<span class="text-danger">'+xhr.responseJSON.errors.proof_number+'</span>');
+        $('input[name="image_name"]').closest('.form-group').append('<span class="text-danger">'+xhr.responseJSON.errors.image_name+'</span>');
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+      });
+      return false;
+    });
   });
+
 </script>
 
 @endpush
