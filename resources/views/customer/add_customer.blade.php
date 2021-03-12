@@ -245,16 +245,12 @@
   <label>Description<span> *</span></label>
   <textarea class="form-textarea" rows="3" name="description"></textarea>
 </div>
-
-
-
 <div class="section_sub_btn">
   <button class="btn btn-default" type="submit">Send</button> 
 </div>
 </form> 
 </div>
 </div>
-
 </div>
 </div>
 </div>
@@ -309,10 +305,11 @@
         error: function(xhr, data) {
           console.log(xhr)
           alert(JSON.stringify(xhr.responseJSON.message));
+          $('.form-group').find('.text-danger').remove()
           // alert(JSON.stringify(xhr.responseJSON.errors['street.0']));
           
         if(xhr.responseJSON.errors.full_name)
-        $('input[name="full_name"]').closest('.form-group').append('<span class="text-danger">'+xhr.responseJSON.errors.staff_name+'</span>');
+        $('input[name="full_name"]').closest('.form-group').append('<span class="text-danger">'+xhr.responseJSON.errors.full_name+'</span>');
          if(xhr.responseJSON.errors.email)
         $('input[name="email"]').closest('.form-group').append('<span class="text-danger">'+xhr.responseJSON.errors.email+'</span>');
          if(xhr.responseJSON.errors.phone)

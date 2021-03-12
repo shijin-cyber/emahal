@@ -29,7 +29,7 @@ class CustomerController extends Controller
 		$this->validate($request, [
 			"full_name" => 'required',
 			"dob" => 'required',
-			"email" => 'required',
+			'email' => 'required|email|unique:users,email',
 			"phone" => 'required',
 			"relation_name" => 'required',
 			"gender" => 'required',

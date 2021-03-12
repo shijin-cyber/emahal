@@ -10,7 +10,7 @@
 
  				<div class="col-md-12 no-padding">
  					<div class="contact_form">
- 						<form method="post" action="{{ url('save-madarassa') }}" enctype="multipart/form-data">
+ 						<form method="post" class="madrassa-save-form" action="{{ url('save-madarassa') }}" enctype="multipart/form-data">
  							@csrf
  							 <input type="hidden" value="{{ @$madrassa->id ?? '0' }}" name="edit_id">
  							
@@ -28,7 +28,8 @@
  							</div>
  							<div class="form-group">
  								<label >Description: <span> *</span></label>
- 								<input type="textarea" value="{{ old('description', @$madrassa->description) }}"   class="form-control" id="description" name="description" >
+ 								
+ 								<textarea value="{{ old('description', @$madrassa->description) }}"  class="form-textarea" id="description" name="description"></textarea>
  							</div>
 
  							<div class="section_sub_btn">
@@ -41,4 +42,56 @@
  		</div>
  	</div>
  </section>
+ @push('scripts')
+ <script type="text/javascript">
+ 	$(document).ready(function($) {
+ 	$('.madrassa-save-form').submit(function(event){
+      event.preventDefault();
+      var action    = $(this).attr('action'),
+          pass_data   = new FormData(this),
+          form      = $(this);
+        // alert(JSON.stringify(pass_data))
+      $.ajax({
+        url: action,
+        type: 'POST',
+        dataType: 'JSON',
+        data: pass_data,
+        success: function(data) {
+          form.find('.form-inputs').val('');
+          $('.success-message').find('h4').text('Successfully saved your details !!');
+          setTimeout(function() {
+            $('.success-message').find('h4').text('');
+          }, 2500);
+          // $('input[name="edit_id"]').val('0');
+          window.location.href = '{{ url("madrassa") }}';
+          $('.form-group').find('span.text-danger').remove();
+        },
+        error: function(xhr, data) {
+          console.log(xhr)
+          alert(JSON.stringify(xhr.responseJSON.message));
+          $('.form-group').find('.text-danger').remove()
+          // alert(JSON.stringify(xhr.responseJSON.errors['street.0']));
+          
+        if(xhr.responseJSON.errors.madrassa_name)
+        $('input[name="madrassa_name"]').closest('.form-group').append('<span class="text-danger">'+xhr.responseJSON.errors.madrassa_name+'</span>');
+
+        if(xhr.responseJSON.errors.reg_id)
+        $('input[name="reg_id"]').closest('.form-group').append('<span class="text-danger">'+xhr.responseJSON.errors.reg_id+'</span>');
+
+        if(xhr.responseJSON.errors.estd)
+        $('input[name="estd"]').closest('.form-group').append('<span class="text-danger">'+xhr.responseJSON.errors.estd+'</span>');
+    if(xhr.responseJSON.errors.description)
+        $('input[name="description"]').closest('.form-group').append('<span class="text-danger">'+xhr.responseJSON.errors.description+'</span>');
+        
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+      });
+      return false;
+    });
+    });
+    
+ </script>
+ @endpush
   @endsection
