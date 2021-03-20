@@ -1,3 +1,6 @@
+textarea {
+  height: auto !important;
+}
 .navBg {
   background-color: #34495e;
   max-width: 17%;
@@ -11,7 +14,7 @@
   margin-left: 17%;
   max-width: 83% !important;
   z-index: 1;
-  padding-top: 8%;
+  padding-top: 7%;
   background: rgb(29 50 72 / 59%);
   width: 83% !important;
   min-height: 100vh;
@@ -38,6 +41,10 @@
   font-weight: 300;
   width: 100%;
 }
+.navBg nav a.active {
+  background-color: #F8FAFC;
+  color: #34495e;
+}
 .navBg nav a:hover {
   background-color: #F8FAFC;
   color: #34495e;
@@ -55,11 +62,11 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.5);
   display: inline-block;
   font-weight: 300;
-  line-height: 64px;
-  margin-bottom: 40px;
-  padding: 0 10px 10px;
+  /* line-height: 64px; */
+  margin-bottom: 15px;
+  padding: 1px 3px 0;
   position: relative;
-  color:#090810;
+  color: #090810;
 }
 
 .section_heading {
@@ -67,11 +74,15 @@
 }
 .contact_form {
   background: hsl(0, 0%, 100%) none repeat scroll 0 0;
-  /* padding: 45px 35px 0; */
+  /*padding: 45px 35px 0;*/
   padding: 45px 35px;
   border-radius: 15px;
   margin-bottom: 12px;
   min-height: 50vh;
+}
+.contact_form.common {
+  min-height: unset;
+  padding: 45px 35px 0;
 }
 
 .contact_form .form-control {
@@ -143,7 +154,7 @@
 
 section.contact_bg {
   clear: both;
-  position:relative;
+  position: relative;
 }
 section.contact_bg:after {
   position:absolute;
@@ -158,9 +169,7 @@ section.contact_bg:after {
 .section_heading {
   text-align: center;
 }
-.textarea {
-  height: auto !important;
-}
+
 .contact_form .form-group {
   margin-bottom: 20px;
   padding: 0;
@@ -175,10 +184,12 @@ section.contact_bg:after {
 }
 
 .settings-container {
+  width: 100%;
   padding: 12px 15px;
   border-radius: 20px;
   background-color: #ffffff;
   min-height: 50vh;
+  z-index: 14;
 }
 
 .settings-tabs {
@@ -237,6 +248,184 @@ section.contact_bg:after {
   transform: translate3d(-50%,-50%,0);
 }
 
+.no-padding {
+  z-index: 14;
+}
+
+.notification-bar {
+  min-width: 25rem;
+  padding: 0;
+}
+
+.notification-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.notification-list li {
+  border: 0.5px solid #dddddd;
+  padding: 25px 0;
+}
+
+.btn {
+  color: white;
+}
+
+.radio-label {
+  display: inline-block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 18px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.radio-label input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom radio button */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  border-radius: 51%;
+}
+
+.checkmark.checkbox {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  border-radius: unset;
+}
+
+/* On mouse-over, add a grey background color */
+.radio-label:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.radio-label input:checked ~ .checkmark {
+  background-color: #00a3a7;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.radio-label input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.radio-label .checkmark:after {
+  top: 9px;
+  left: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
+}
+
+.radio-label .checkmark.checkbox:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+  border-radius: unset;
+}
+
+.select2-hidden-accessible {
+    border: 0 !important;
+    clip: rect(0 0 0 0) !important;
+    height: 1px !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    position: absolute !important;
+    width: 1px !important
+}
+
+.select2-container--default .select2-selection--single,
+.select2-selection .select2-selection--single {
+    border: 1px solid #d2d6de;
+    border-radius: 0;
+    padding: 6px 12px;
+    height: 34px
+}
+
+.select2-container--default .select2-selection--single {
+    background-color: #fff;
+    border: 1px solid #aaa;
+    border-radius: 4px
+}
+
+.select2-container .select2-selection--single {
+    box-sizing: border-box;
+    cursor: pointer;
+    display: block;
+    height: 28px;
+    user-select: none;
+    -webkit-user-select: none
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+    padding-right: 10px
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+    padding-left: 0;
+    padding-right: 0;
+    height: auto;
+    margin-top: -3px
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #444;
+    line-height: 28px
+}
+
+.select2-container--default .select2-selection--single,
+.select2-selection .select2-selection--single {
+    border: 1px solid #d2d6de;
+    border-radius: 0 !important;
+    padding: 6px 12px;
+    height: 40px !important
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 26px;
+    position: absolute;
+    top: 6px !important;
+    right: 1px;
+    width: 20px
+}
+
 @-webkit-keyframes spin {
   0% { -webkit-transform: rotate(0deg); }
   100% { -webkit-transform: rotate(360deg); }
@@ -253,6 +442,20 @@ section.contact_bg:after {
   }
   .navBg nav {
     padding-top: 0px;
+  }
+}
+@media (max-width: 768px) {
+  .main-content-container{
+    margin-left: 11.5%;
+    flex: unset;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .navBg {
+    max-width: 11.5%;
+  }
+  .navBg nav span {
+    display: none;
   }
 }
 @media (max-width: 576px) {

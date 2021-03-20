@@ -11,6 +11,9 @@
             @endif
 
             {{ __('You are logged in!') }}
+            @foreach($notification as $notify)
+                <p>{{ $notify->data['body'] }}</p>
+            @endforeach
         </div>
     </div>
 @endsection

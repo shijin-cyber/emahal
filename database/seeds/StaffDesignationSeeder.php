@@ -11,23 +11,24 @@ class StaffDesignationSeeder extends Seeder
      */
     public function run($user_id = -1)
     {
-        DB::table('staff_designations')->insert(
-            [
-                'user_id' 	=> $user_id,
-                'type_name' => 'Qateeb'
-            ],
-            [
-                'user_id' 	=> $user_id,
-                'type_name' => 'Mukri'
-            ],
-            [
-                'user_id' 	=> $user_id,
-                'type_name' => 'Sadar Muallim'
-            ],
-            [
-                'user_id' 	=> $user_id,
-                'type_name' => 'Muallim'
-            ],
-        );
+        if($user_id != -1)
+            DB::table('staff_designations')->insert([
+                [
+                    'user_id' 	=> $user_id,
+                    'type_name' => 'Qateeb'
+                ],
+                [
+                    'user_id' 	=> $user_id,
+                    'type_name' => 'Mukri'
+                ],
+                [
+                    'user_id' 	=> $user_id,
+                    'type_name' => 'Sadar Muallim'
+                ],
+                [
+                    'user_id' 	=> $user_id,
+                    'type_name' => 'Muallim'
+                ],
+            ]);
     }
 }

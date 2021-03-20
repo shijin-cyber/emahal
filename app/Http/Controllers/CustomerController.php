@@ -24,14 +24,12 @@ class CustomerController extends Controller
 		return view('customer.add_customer', compact('customers'));
 	}
 	public function save_customer(Request $request) {
-		// dd($request->hasFile('proof_image_1'));
-	  	// return $request->file('image_name');
 		$this->validate($request, [
 			"full_name" => 'required',
 			"dob" => 'required',
 			'email' => 'required|email|unique:users,email',
 			"phone" => 'required',
-			"relation_name" => 'required',
+			"relation_name" => 'nullable',
 			"gender" => 'required',
 			'street' => 'required|array|min:1',
 			'street.*' => 'required|string|max:255',
@@ -69,22 +67,25 @@ class CustomerController extends Controller
 							]
 						);
 				}
-				if($request->edit_id == 0){
-					$customer = new Customer;
-					Address::where('customer_id', $request->edit_id)->delete();
-				}
-				else
-					$customer = Customer::find($request->edit_id);
-				$customer->user_id          = Auth::user()->id;
-				$customer->parent_id  	    = $request->relation_name;
-				$customer->full_name 		= $request->full_name;
-				$customer->dob 				= $request->dob;
-				$customer->email 			= $request->email;
-				$customer->phone 			= $request->phone;
-				$customer->is_head 			= $request->is_head == 1;
-				$customer->relation_name 	= $request->relation_name;
-				$customer->description 		= $request->description;
-				$customer->save();
+
+			if($request->edit_id == 0)
+				$customer = new Customer;
+			else {
+				$customer = Customer::find($request->edit_id);
+				Address::where('customer_id', $request->edit_id)->delete();
+			}
+
+			$customer->user_id          = Auth::user()->id;
+			$customer->parent_id  	    = $request->relation_name;
+			$customer->full_name 		= $request->full_name;
+			$customer->dob 				= $request->dob;
+			$customer->email 			= $request->email;
+			$customer->phone 			= $request->phone;
+			$customer->is_head 			= $request->is_head == 1;
+			$customer->gender 			= $request->gender;
+			// $customer->relation_name 	= $request->relation_name;
+			$customer->description 		= $request->description;
+			$customer->save();
 
 				foreach ($request->address_type as $key => $value) {
 					$customeradd 				= new Address;

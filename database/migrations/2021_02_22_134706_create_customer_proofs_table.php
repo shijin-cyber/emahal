@@ -16,11 +16,12 @@ class CreateCustomerProofsTable extends Migration
         Schema::create('customer_proofs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('customer_id')->nullable();
+            $table->unsignedBigInteger('staff_id')->nullable();
             $table->text('proof_name');
             $table->string('proof_number', 250);
             $table->string('image_name', 250)->nullable();
-            // $table->text('others')->nullable();
-            // $table->text('description')->nullable();
+            $table->text('others')->nullable();
+            $table->text('description')->nullable();
             $table->boolean('is_verified')->default(true);
             $table->timestamps();
         });

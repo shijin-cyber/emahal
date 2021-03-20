@@ -17,6 +17,9 @@ class CreateStaffTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('staff_name', 255);
+            $table->string('email', 170);
+            $table->string('phone', 25);
+            $table->text('description')->nullable();
             // $table->unsignedBigInteger('designation_id')->nullable(); create as table to multiple designations
             // $table->string('address', 255); create as new table link to customer address table and replaced that table by common address
             $table->timestamps();
